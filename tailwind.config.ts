@@ -83,7 +83,11 @@ const config: Config = {
           purple: "#8b5cf6",
         }
       },
+      // Tighter corners with a clear hierarchy: chips 6px, inputs and buttons 8px, panels 10-12px
       borderRadius: {
+        xl: "10px",
+        "2xl": "12px",
+        "3xl": "14px",
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",

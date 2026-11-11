@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { Logo } from '@/components/shared/Logo';
 import {
   Mail,
   Globe2,
@@ -30,6 +29,14 @@ import {
   LayoutDashboard,
   Search,
   X,
+  Server,
+  Plug,
+  Gauge,
+  Database,
+  BookOpen,
+  ArrowLeftRight,
+  Hash,
+  Radar,
 } from 'lucide-react';
 import {
   Tooltip,
@@ -127,7 +134,7 @@ export const TOOLS: TabItem[] = [
     id: 'ip',
     label: 'IP & Threat Reputation',
     category: 'RECON',
-    icon: Radio,
+    icon: Server,
     description: 'GeoIP, ASN route lookup, reverse DNS & port scanning',
     theme: {
       activeBg: ' bg-indigo-500/15 to-transparent',
@@ -146,7 +153,7 @@ export const TOOLS: TabItem[] = [
     id: 'ports',
     label: 'Port & Service Intelligence',
     category: 'RECON',
-    icon: Radio,
+    icon: Plug,
     description: 'Ports 0-65535 encyclopedia, known exploits & Nmap builder',
     theme: {
       activeBg: ' bg-blue-500/15 to-transparent',
@@ -321,7 +328,7 @@ export const TOOLS: TabItem[] = [
     id: 'intel-pivot',
     label: 'Threat Intel Pivot Hub',
     category: 'THREAT',
-    icon: Globe,
+    icon: Radar,
     description: '1-click multi-engine IOC launcher (VirusTotal, AbuseIPDB, Shodan, Talos)',
     theme: {
       activeBg: ' bg-cyan-500/15 to-transparent',
@@ -340,7 +347,7 @@ export const TOOLS: TabItem[] = [
     id: 'cvss',
     label: 'CVSS v3.1 Calculator',
     category: 'THREAT',
-    icon: ShieldAlert,
+    icon: Gauge,
     description: 'Vulnerability scoring, vector builder & FIRST.org severity math',
     theme: {
       activeBg: ' bg-rose-500/15 to-transparent',
@@ -359,7 +366,7 @@ export const TOOLS: TabItem[] = [
     id: 'siem',
     label: 'SIEM Query Builder',
     category: 'THREAT',
-    icon: Terminal,
+    icon: Database,
     description: 'Builds IOC hunting queries for KQL, SPL, Elastic, Sigma and QRadar',
     theme: {
       activeBg: ' bg-blue-500/15 to-transparent',
@@ -418,7 +425,7 @@ export const TOOLS: TabItem[] = [
     id: 'converter',
     label: 'Data Conversion Hub',
     category: 'CRYPTO',
-    icon: Binary,
+    icon: ArrowLeftRight,
     description: 'Base64, Hex, URL, Binary, ROT13, Timestamps & XOR ciphers',
     theme: {
       activeBg: ' bg-teal-500/15 to-transparent',
@@ -437,7 +444,7 @@ export const TOOLS: TabItem[] = [
     id: 'crypto',
     label: 'Hash & Crypto Hub',
     category: 'CRYPTO',
-    icon: Binary,
+    icon: Hash,
     description: 'MD5, SHA-1, SHA-256, SHA-512 & HMAC for text and files',
     theme: {
       activeBg: ' bg-pink-500/15 to-transparent',
@@ -475,7 +482,7 @@ export const TOOLS: TabItem[] = [
     id: 'cheatsheet',
     label: 'Command Cheat-Sheet Hub',
     category: 'CRYPTO',
-    icon: Terminal,
+    icon: BookOpen,
     description: 'Interactive playbooks for Windows, Linux, Git & Docker commands',
     theme: {
       activeBg: ' bg-emerald-500/15 to-transparent',
@@ -499,6 +506,13 @@ interface SidebarProps {
   onToggleCollapse: () => void;
 }
 
+export const CATEGORIES: Array<{ id: TabItem['category']; label: string }> = [
+  { id: 'RECON', label: 'Recon & perimeter' },
+  { id: 'WEB', label: 'Web & app security' },
+  { id: 'THREAT', label: 'Threat hunting & SIEM' },
+  { id: 'CRYPTO', label: 'Crypto & utilities' },
+];
+
 export function Sidebar({ activeTab, onSelectTab, collapsed, onToggleCollapse }: SidebarProps) {
   const [searchQuery, setSearchQuery] = React.useState('');
 
@@ -513,219 +527,106 @@ export function Sidebar({ activeTab, onSelectTab, collapsed, onToggleCollapse }:
     );
   }, [searchQuery]);
 
-  const reconTools = filteredTools.filter(t => t.category === 'RECON');
-  const webTools = filteredTools.filter(t => t.category === 'WEB');
-  const threatTools = filteredTools.filter(t => t.category === 'THREAT');
-  const cryptoTools = filteredTools.filter(t => t.category === 'CRYPTO');
-
-  const renderSection = (title: string, icon: React.ReactNode, tools: TabItem[], colorScheme: string) => {
-    if (tools.length === 0) return null;
+  // One nav row. Monochrome icons; the active row gets a tint and an accent bar inside its own bounds.
+  const navItem = (id: TabId, label: string, Icon: React.ComponentType<{ className?: string }>, hint: string) => {
+    const isActive = activeTab === id;
+    const row = (
+      <button
+        key={id}
+        onClick={() => onSelectTab(id)}
+        aria-current={isActive ? 'page' : undefined}
+        className={`relative w-full flex items-center gap-2.5 rounded-lg text-left text-[13px] leading-tight transition-colors duration-100 ${
+          collapsed ? 'justify-center px-0 py-2' : 'px-2.5 py-[7px]'
+        } ${
+          isActive
+            ? 'bg-[var(--accent-badge-bg)] text-[var(--text-main)] font-medium'
+            : 'text-[var(--text-muted)] hover:bg-[var(--bg-card)] hover:text-[var(--text-main)]'
+        }`}
+      >
+        {isActive && <span aria-hidden className="absolute left-0 top-1.5 bottom-1.5 w-[3px] rounded-r bg-[var(--accent)]" />}
+        <Icon className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-[var(--accent-text)]' : ''}`} />
+        {!collapsed && <span className="truncate">{label}</span>}
+      </button>
+    );
+    if (!collapsed) return row;
     return (
-      <div className="mb-5">
-        {!collapsed && (
-          <div className="px-3 mb-2 flex items-center justify-between text-[10px] font-semibold uppercase tracking-wider text-slate-400">
-            <div className="flex items-center gap-2">
-              <span>{icon}</span>
-              <span>{title}</span>
-            </div>
-            <span className="text-[9px] px-1.5 py-0.2 rounded bg-[var(--bg-card)] border border-[var(--border-subtle)] text-slate-400 font-mono">
-              {tools.length}
-            </span>
-          </div>
-        )}
-        <nav className="space-y-1.5">
-          {tools.map(tool => {
-            const Icon = tool.icon;
-            const isActive = activeTab === tool.id;
-
-            const buttonElement = (
-              <button
-                key={tool.id}
-                onClick={() => onSelectTab(tool.id)}
-                className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-left text-xs transition-colors duration-150 group relative ${
-                  isActive
-                    ? 'bg-[var(--bg-card)] border border-[var(--border-strong)] text-slate-50 font-semibold shadow-xs'
-                    : 'text-slate-300 hover:bg-[var(--bg-card)] hover:text-slate-50 border border-transparent'
-                }`}
-              >
-                <div
-                  className={`p-1.5 rounded-lg transition-all flex-shrink-0 ${
-                    isActive
-                      ? `${tool.theme.iconBg} ${tool.theme.iconColor} border ${tool.theme.iconBorder} shadow-sm scale-105`
-                      : `${tool.theme.iconBg} ${tool.theme.iconColor} opacity-75 group-hover:opacity-100 group-hover:scale-105 border border-transparent`
-                  }`}
-                >
-                  <Icon className="w-3.5 h-3.5" />
-                </div>
-                {!collapsed && (
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-1">
-                      <span className="font-bold text-[11px] truncate tracking-tight">
-                        {tool.label}
-                      </span>
-                      {tool.badge && (
-                        <span
-                          className={`text-[8px] px-1.5 py-0.2 rounded-full ${tool.theme.badgeBg} border ${tool.theme.badgeBorder} ${tool.theme.badgeText} font-mono font-black whitespace-nowrap flex-shrink-0`}
-                        >
-                          {tool.badge}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                )}
-                {isActive && (
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-5 rounded-l-full bg-[var(--accent)]" />
-                )}
-              </button>
-            );
-
-            if (collapsed) {
-              return (
-                <Tooltip key={tool.id}>
-                  <TooltipTrigger asChild>{buttonElement}</TooltipTrigger>
-                  <TooltipContent side="right" className="max-w-xs">
-                    <div className="font-bold text-xs text-slate-50">{tool.label}</div>
-                    <div className="text-[10px] text-slate-400 font-mono mt-0.5">{tool.description}</div>
-                  </TooltipContent>
-                </Tooltip>
-              );
-            }
-
-            return buttonElement;
-          })}
-        </nav>
-      </div>
+      <Tooltip key={id}>
+        <TooltipTrigger asChild>{row}</TooltipTrigger>
+        <TooltipContent side="right" className="max-w-xs">
+          <div className="font-medium text-xs text-slate-50">{label}</div>
+          <div className="text-[11px] text-slate-400 mt-0.5">{hint}</div>
+        </TooltipContent>
+      </Tooltip>
     );
   };
-
-  const isDashboardActive = activeTab === 'dashboard';
 
   return (
     <TooltipProvider delayDuration={100}>
       <aside
-        className={`relative border-r border-[var(--border-subtle)] bg-[var(--bg-surface)] transition-all duration-200 flex flex-col justify-between shadow-xs flex-shrink-0 z-20 ${
-          collapsed ? 'w-18' : 'w-72'
+        aria-label="Tools"
+        className={`relative border-r border-[var(--border-subtle)] bg-[var(--bg-surface)] transition-[width] duration-200 flex flex-col flex-shrink-0 z-20 ${
+          collapsed ? 'w-[60px]' : 'w-[272px]'
         }`}
       >
-      <div className="p-3 flex-1 overflow-y-auto">
-        {/* Collapse toggle button & Title */}
-        <div className="flex items-center justify-between mb-3 px-1">
+        <div className={`flex-1 overflow-y-auto ${collapsed ? 'px-2 py-3' : 'px-3 py-3'}`}>
+          <div className={`flex items-center mb-3 ${collapsed ? 'justify-center' : 'justify-between pl-1'}`}>
+            {!collapsed && <span className="text-[13px] font-semibold text-[var(--text-main)]">Tools</span>}
+            <button
+              onClick={onToggleCollapse}
+              className="p-1.5 rounded-md text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-card)] transition-colors"
+              aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            >
+              {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+            </button>
+          </div>
+
           {!collapsed && (
-            <div className="flex items-center gap-2">
-              <span className="text-xs tracking-normal text-slate-300 font-semibold">
-                Security Tools
-              </span>
-              <span className="px-2 py-0.5 rounded-full bg-[var(--bg-card)] border border-[var(--border-subtle)] text-[10px] font-mono text-slate-400 font-medium">
-                22
-              </span>
+            <div className="relative mb-3">
+              <Search className="w-3.5 h-3.5 text-[var(--text-muted)] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <input
+                type="text"
+                placeholder={`Filter ${TOOLS.length} tools`}
+                aria-label="Filter tools"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                className="w-full pl-8 pr-8 py-1.5 bg-[var(--bg-app)] border border-[var(--border-subtle)] focus:border-[var(--accent)] rounded-lg text-[13px] text-[var(--text-main)] placeholder:text-[var(--text-muted)] focus:outline-none transition-colors"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  aria-label="Clear filter"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--text-main)] p-0.5"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
             </div>
           )}
-          <button
-            onClick={onToggleCollapse}
-            className="p-1.5 rounded-lg bg-[var(--bg-card)] hover:bg-[var(--bg-card-hover)] border border-[var(--border-subtle)] text-slate-400 hover:text-slate-200 transition-colors ml-auto shadow-xs"
-            title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
-          >
-            {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
-          </button>
-        </div>
 
-        {/* Top Pinned: Security Overview Dashboard */}
-        <div className="mb-4">
-          {(() => {
-            const dashboardBtn = (
-              <button
-                onClick={() => onSelectTab('dashboard')}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs transition-colors duration-150 group relative ${
-                  isDashboardActive
-                    ? 'bg-[var(--bg-card)] border border-[var(--border-strong)] text-slate-50 font-semibold shadow-xs'
-                    : 'text-slate-300 hover:bg-[var(--bg-card)] hover:text-slate-50 border border-transparent'
-                }`}
-              >
-                <div
-                  className={`p-2 rounded-lg transition-colors flex-shrink-0 ${
-                    isDashboardActive
-                      ? 'bg-[var(--bg-surface)] text-[var(--accent-text)] border border-[var(--border-strong)]'
-                      : 'bg-[var(--bg-surface)] text-slate-400 border border-[var(--border-subtle)]'
-                  }`}
-                >
-                  <LayoutDashboard className="w-4 h-4" />
-                </div>
-                {!collapsed && (
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-1">
-                      <span className="font-semibold text-xs text-slate-50">Security Overview</span>
-                      <span className="text-[8px] px-1.5 py-0.5 rounded bg-[var(--accent-badge-bg)] border border-[var(--accent-badge-border)] text-[var(--accent-text)] font-bold uppercase">
-                        OVERVIEW
-                      </span>
-                    </div>
-                  </div>
+          <nav className="space-y-0.5 mb-4">{navItem('dashboard', 'Overview', LayoutDashboard, 'Triage an indicator')}</nav>
+
+          {CATEGORIES.map(cat => {
+            const tools = filteredTools.filter(t => t.category === cat.id);
+            if (tools.length === 0) return null;
+            return (
+              <div key={cat.id} className="mb-4">
+                {collapsed ? (
+                  <div className="mx-2 mb-2 border-t border-[var(--border-subtle)]" />
+                ) : (
+                  <h2 className="px-2.5 mb-1 text-xs font-medium text-[var(--text-muted)] opacity-80">{cat.label}</h2>
                 )}
-                {isDashboardActive && (
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-5 rounded-l-full bg-[var(--accent)]" />
-                )}
-              </button>
+                <nav className="space-y-0.5">{tools.map(t => navItem(t.id, t.label, t.icon, t.description))}</nav>
+              </div>
             );
+          })}
 
-            if (collapsed) {
-              return (
-                <Tooltip>
-                  <TooltipTrigger asChild>{dashboardBtn}</TooltipTrigger>
-                  <TooltipContent side="right" className="max-w-xs">
-                    <div className="font-bold text-xs text-slate-50">Security Overview</div>
-                    <div className="text-[10px] text-slate-400 font-mono mt-0.5">System Dashboard & Triage</div>
-                  </TooltipContent>
-                </Tooltip>
-              );
-            }
-            return dashboardBtn;
-          })()}
+          {!collapsed && filteredTools.length === 0 && (
+            <p className="px-2.5 text-[13px] text-[var(--text-muted)]">
+              No tool matches &ldquo;{searchQuery}&rdquo;. Try a protocol or task, such as DMARC or Base64.
+            </p>
+          )}
         </div>
-
-        {/* Live Filter Search in Sidebar */}
-        {!collapsed && (
-          <div className="relative mb-4">
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-            <input
-              type="text"
-              placeholder="Search 22 tools..."
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              className="w-full pl-8 pr-8 py-1.5 bg-[var(--bg-card)] border border-[var(--border-subtle)] focus:border-[var(--accent)] rounded-lg text-xs font-mono text-slate-200 placeholder-slate-500 focus:outline-none transition-colors"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-50 p-0.5"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            )}
-          </div>
-        )}
-
-        {/* 1. Recon & Infrastructure (Cyan) */}
-        {renderSection('Recon & Perimeter', <Globe2 className="w-3.5 h-3.5 text-cyan-400" />, reconTools, 'cyan')}
-
-        {/* 2. Web & App Security (Emerald) */}
-        {renderSection('Web & App Defense', <Lock className="w-3.5 h-3.5 text-emerald-400" />, webTools, 'emerald')}
-
-        {/* 3. Threat Hunting & SIEM (Violet) */}
-        {renderSection('Threat Hunting & SIEM', <Terminal className="w-3.5 h-3.5 text-purple-400" />, threatTools, 'purple')}
-
-        {/* 4. Crypto & Identity Utilities (Amber) */}
-        {renderSection('Crypto & Utilities', <Layers className="w-3.5 h-3.5 text-amber-400" />, cryptoTools, 'amber')}
-      </div>
-
-      {/* Footer Info */}
-      {!collapsed && (
-        <div className="p-3 pb-6 sm:pb-3 border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[10px] text-slate-400 font-mono flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Logo className="w-4 h-4" />
-            <span className="text-slate-50 font-bold tracking-wider">CYBER TOOLS</span>
-          </div>
-        </div>
-      )}
-    </aside>
-  </TooltipProvider>
-);
+      </aside>
+    </TooltipProvider>
+  );
 }

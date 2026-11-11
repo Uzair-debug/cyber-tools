@@ -16,14 +16,14 @@ export const THEMES: ThemeOption[] = [
   {
     id: 'graphite',
     name: 'Graphite',
-    subtitle: 'Neutral grey with violet accent',
+    subtitle: 'Steel grey with iris accent',
     icon: '◐',
-    previewColor: '#7c3aed',
+    previewColor: '#615be0',
   },
   {
     id: 'midnight',
     name: 'Midnight',
-    subtitle: 'True black with violet accent',
+    subtitle: 'True black with iris accent',
     icon: '●',
     previewColor: '#000000',
   },
@@ -37,7 +37,7 @@ export const THEMES: ThemeOption[] = [
   {
     id: 'light',
     name: 'Light',
-    subtitle: 'Light grey with violet accent',
+    subtitle: 'Light grey with iris accent',
     icon: '○',
     previewColor: '#f4f4f5',
   },

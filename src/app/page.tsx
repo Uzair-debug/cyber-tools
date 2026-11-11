@@ -11,12 +11,11 @@ import { CaseProvider } from '@/components/shared/CaseContext';
 import { ThemeProvider } from '@/components/shared/ThemeContext';
 import { ToolErrorBoundary } from '@/components/shared/ToolErrorBoundary';
 import { DashboardOverview } from '@/components/dashboard/DashboardOverview';
-import { LayoutDashboard, ChevronLeft } from 'lucide-react';
 
 // Each tool is code-split into its own chunk and only downloaded the first time it is opened
 const ToolLoading = () => (
-  <div className="p-8 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-subtle)] text-center text-xs font-mono text-[var(--text-muted)]">
-    Loading tool...
+  <div className="py-16 text-center text-[13px] text-[var(--text-muted)]" role="status">
+    Loading tool…
   </div>
 );
 const lazyTool = (load: () => Promise<React.ComponentType>) => dynamic(load, { loading: ToolLoading });
@@ -93,6 +92,11 @@ export default function Home() {
     });
   }, [activeTab]);
 
+  // Phones get the icon-only sidebar so the tool has room
+  useEffect(() => {
+    if (window.matchMedia('(max-width: 767px)').matches) setSidebarCollapsed(true);
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
@@ -123,7 +127,7 @@ export default function Home() {
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative z-10">
           {/* Header */}
           <Header
-            activeTabTitle={activeToolObj?.label || 'Security Overview'}
+            activeTabTitle={activeToolObj?.label}
             activeTab={activeTab}
             onSelectTab={setActiveTab}
             onOpenCommandPalette={() => setCommandPaletteOpen(true)}
@@ -132,29 +136,8 @@ export default function Home() {
           />
 
           {/* Scrollable Tool Work Area */}
-          <main className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-6 w-full mx-auto relative">
-            {/* Sub-Header Banner (when inside a specific tool) */}
-            {!isDashboard && activeToolObj && (
-              <div className="mb-6 flex flex-wrap items-center justify-between gap-3 p-3 sm:p-4 rounded-xl bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-sm">
-                <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-                  <button
-                    onClick={() => setActiveTab('dashboard')}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--bg-surface)] hover:bg-[var(--bg-card-hover)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] text-xs font-medium text-slate-200 transition-colors"
-                  >
-                    <ChevronLeft className="w-3.5 h-3.5" />
-                    <span>Overview</span>
-                  </button>
-
-                  <div className="h-4 w-px bg-[var(--border-subtle)] hidden sm:block" />
-
-                  <span className="text-sm text-[var(--text-muted)] hidden lg:inline truncate max-w-xl">
-                    {activeToolObj.description}
-                  </span>
-                </div>
-
-              </div>
-            )}
-
+          <main className="flex-1 overflow-y-auto px-3 py-5 sm:px-6 md:px-8 md:py-7 w-full relative">
+            <div className="max-w-[1240px] mx-auto">
             {/* Dashboard / Mission Control */}
             <div className={isDashboard ? 'block' : 'hidden'}>
               <DashboardOverview
@@ -166,12 +149,13 @@ export default function Home() {
 
             {/* Tools stay mounted once visited, so each has its own error boundary */}
             {TOOL_PANES.filter(([id]) => visitedTabs.has(id)).map(([id, Tool]) => (
-              <div key={id} className={activeTab === id ? 'block' : 'hidden'}>
+              <div key={id} className={`tool-pane ${activeTab === id ? 'block' : 'hidden'}`}>
                 <ToolErrorBoundary title={TOOLS.find(t => t.id === id)?.label ?? 'This tool'}>
                   <Tool />
                 </ToolErrorBoundary>
               </div>
             ))}
+            </div>
           </main>
         </div>
 

@@ -119,40 +119,40 @@
     --sky-800: 7 89 133;
     --sky-900: 12 74 110;
     --sky-950: 8 47 73;
-    --n-50: 250 250 250;
-    --n-100: 244 244 245;
-    --n-200: 228 228 231;
-    --n-300: 212 212 216;
-    --n-400: 161 161 170;
-    --n-500: 113 113 122;
-    --n-600: 82 82 91;
-    --n-700: 63 63 70;
-    --n-800: 39 39 42;
-    --n-900: 24 24 27;
-    --n-950: 9 9 11;
-    --a-50: 245 243 255;
-    --a-100: 237 233 254;
-    --a-200: 221 214 254;
-    --a-300: 196 181 253;
-    --a-400: 167 139 250;
-    --a-500: 139 92 246;
-    --a-600: 124 58 237;
-    --a-700: 109 40 217;
-    --a-800: 91 33 182;
-    --a-900: 76 29 149;
-    --a-950: 46 16 101;
-    --bg-app: #09090b;
-    --bg-surface: #111114;
-    --bg-card: #18181b;
-    --bg-card-hover: #212124;
-    --border-subtle: #27272a;
-    --border-strong: #3f3f46;
-    --accent: #7c3aed;
-    --accent-text: #a78bfa;
-    --accent-badge-bg: rgb(139 92 246 / 0.1);
-    --accent-badge-border: rgb(139 92 246 / 0.3);
-    --text-main: #fafafa;
-    --text-muted: #a1a1aa;
+    --n-50: 247 248 250;
+    --n-100: 238 240 243;
+    --n-200: 221 225 231;
+    --n-300: 195 201 210;
+    --n-400: 154 162 175;
+    --n-500: 107 115 128;
+    --n-600: 74 81 93;
+    --n-700: 52 58 68;
+    --n-800: 33 37 44;
+    --n-900: 23 26 31;
+    --n-950: 14 16 20;
+    --a-50: 240 240 255;
+    --a-100: 227 227 254;
+    --a-200: 201 200 253;
+    --a-300: 169 166 251;
+    --a-400: 140 135 247;
+    --a-500: 116 112 238;
+    --a-600: 97 91 224;
+    --a-700: 80 74 196;
+    --a-800: 66 61 158;
+    --a-900: 55 52 125;
+    --a-950: 34 31 74;
+    --bg-app: #0f1115;
+    --bg-surface: #13161a;
+    --bg-card: #181b20;
+    --bg-card-hover: #1e2228;
+    --border-subtle: #262a31;
+    --border-strong: #363c46;
+    --accent: #615be0;
+    --accent-text: #a9a6fb;
+    --accent-badge-bg: rgb(97 91 224 / 0.12);
+    --accent-badge-border: rgb(97 91 224 / 0.35);
+    --text-main: #e8ebef;
+    --text-muted: #9aa2af;
   }
 
   [data-theme="midnight"] {
@@ -167,27 +167,27 @@
     --n-800: 31 31 31;
     --n-900: 15 15 15;
     --n-950: 0 0 0;
-    --a-50: 245 243 255;
-    --a-100: 237 233 254;
-    --a-200: 221 214 254;
-    --a-300: 196 181 253;
-    --a-400: 167 139 250;
-    --a-500: 139 92 246;
-    --a-600: 124 58 237;
-    --a-700: 109 40 217;
-    --a-800: 91 33 182;
-    --a-900: 76 29 149;
-    --a-950: 46 16 101;
+    --a-50: 240 240 255;
+    --a-100: 227 227 254;
+    --a-200: 201 200 253;
+    --a-300: 169 166 251;
+    --a-400: 140 135 247;
+    --a-500: 116 112 238;
+    --a-600: 97 91 224;
+    --a-700: 80 74 196;
+    --a-800: 66 61 158;
+    --a-900: 55 52 125;
+    --a-950: 34 31 74;
     --bg-app: #000000;
     --bg-surface: #080808;
     --bg-card: #0f0f0f;
     --bg-card-hover: #191919;
     --border-subtle: #1f1f1f;
     --border-strong: #404040;
-    --accent: #7c3aed;
-    --accent-text: #a78bfa;
-    --accent-badge-bg: rgb(139 92 246 / 0.1);
-    --accent-badge-border: rgb(139 92 246 / 0.3);
+    --accent: #615be0;
+    --accent-text: #a9a6fb;
+    --accent-badge-bg: rgb(97 91 224 / 0.12);
+    --accent-badge-border: rgb(97 91 224 / 0.35);
     --text-main: #fafafa;
     --text-muted: #a3a3a3;
   }
@@ -342,41 +342,46 @@
     --sky-800: 186 230 253;
     --sky-900: 224 242 254;
     --sky-950: 240 249 255;
-    --n-50: 9 9 11;
-    --n-100: 24 24 27;
-    --n-200: 39 39 42;
-    --n-300: 63 63 70;
-    --n-400: 82 82 91;
-    --n-500: 113 113 122;
-    --n-600: 161 161 170;
-    --n-700: 212 212 216;
-    --n-800: 228 228 231;
+    --n-50: 14 16 20;
+    --n-100: 23 26 31;
+    --n-200: 33 37 44;
+    --n-300: 52 58 68;
+    --n-400: 74 81 93;
+    --n-500: 107 115 128;
+    --n-600: 154 162 175;
+    --n-700: 195 201 210;
+    --n-800: 221 225 231;
     --n-900: 255 255 255;
-    --n-950: 244 244 245;
-    --a-50: 46 16 101;
-    --a-100: 76 29 149;
-    --a-200: 91 33 182;
-    --a-300: 91 33 182;
-    --a-400: 109 40 217;
-    --a-500: 124 58 237;
-    --a-600: 124 58 237;
-    --a-700: 109 40 217;
-    --a-800: 221 214 254;
-    --a-900: 237 233 254;
-    --a-950: 245 243 255;
-    --bg-app: #f4f4f5;
+    --n-950: 241 243 246;
+    --a-50: 34 31 74;
+    --a-100: 55 52 125;
+    --a-200: 66 61 158;
+    --a-300: 80 74 196;
+    --a-400: 80 74 196;
+    --a-500: 97 91 224;
+    --a-600: 97 91 224;
+    --a-700: 80 74 196;
+    --a-800: 201 200 253;
+    --a-900: 227 227 254;
+    --a-950: 240 240 255;
+    --bg-app: #f1f3f6;
     --bg-surface: #ffffff;
     --bg-card: #ffffff;
-    --bg-card-hover: #f4f4f5;
-    --border-subtle: #e4e4e7;
-    --border-strong: #d4d4d8;
-    --accent: #7c3aed;
-    --accent-text: #6d28d9;
-    --accent-badge-bg: rgb(124 58 237 / 0.08);
-    --accent-badge-border: rgb(124 58 237 / 0.25);
-    --text-main: #18181b;
-    --text-muted: #52525b;
+    --bg-card-hover: #f1f3f6;
+    --border-subtle: #dde1e7;
+    --border-strong: #c3c9d2;
+    --accent: #615be0;
+    --accent-text: #4f49c4;
+    --accent-badge-bg: rgb(97 91 224 / 0.08);
+    --accent-badge-border: rgb(97 91 224 / 0.28);
+    --text-main: #171a1f;
+    --text-muted: #4a515d;
   }
+}
+
+:root {
+  /* Base corner radius for rounded-lg / md / sm (inputs and buttons) */
+  --radius: 8px;
 }
 
 body {
@@ -409,4 +414,69 @@ body {
 
 .code-font {
   font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* Data (indicators, hashes, code) uses JetBrains Mono; slashed zero keeps 0 and O apart */
+.font-mono,
+.code-font,
+code,
+kbd,
+pre {
+  font-variant-ligatures: none;
+  font-feature-settings: "zero" 1;
+}
+
+/* Visible keyboard focus everywhere, without a ring on mouse clicks */
+:where(button, a, input, select, textarea, [role="button"], [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Tool pages. The shell (page.tsx) renders the page title row, so each tool's own banner is
+   flattened into plain heading text: no card, no decorative glow, no coloured icon tile. */
+.tool-pane > div > div:first-child {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+  backdrop-filter: none;
+  overflow: visible;
+}
+.tool-pane > div > div:first-child .blur-3xl {
+  display: none;
+}
+.tool-pane > div > div:first-child div:has(> svg:only-child):not(:has(button)) {
+  display: none;
+}
+.tool-pane > div > div:first-child h1 {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text-main);
+}
+.tool-pane > div > div:first-child h1 + p,
+.tool-pane > div > div:first-child h1 ~ p,
+.tool-pane > div > div:first-child div:has(> h1) + p {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  max-width: 68ch;
+  margin-top: 0.375rem;
+  color: var(--text-muted);
+}
+
+/* Disabled buttons read as unavailable, not as a faded accent */
+button:disabled {
+  filter: grayscale(1);
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
