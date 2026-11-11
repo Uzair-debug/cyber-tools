@@ -1,0 +1,12 @@
+# Cloudflare Workers static assets bypass next.config.mjs headers(), so they're set here.
+# Keep in sync with securityHeaders in next.config.mjs.
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# Build chunks have content hashes in their names, so they never change
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable

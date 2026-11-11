@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Cyber Tools Portal">
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#5b21b6"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#tile)"/>
+  <path d="M32 9.5 51 16.5v14c0 12.2-8 21.3-19 25-11-3.7-19-12.8-19-25v-14z" fill="none" stroke="#fff" stroke-width="4.2" stroke-linejoin="round"/>
+  <path d="m23.5 26 7 6-7 6" fill="none" stroke="#fff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M34 39.5h8" stroke="#fff" stroke-width="4.2" stroke-linecap="round"/>
+</svg>
