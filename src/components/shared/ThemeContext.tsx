@@ -44,22 +44,11 @@ export const THEMES: ThemeOption[] = [
 ];
 
 const STORAGE_KEY = 'ctp-theme';
-// Themes from before the rebrand, mapped to their closest replacement
-const LEGACY_KEY = 'crimson-sec-theme';
-const LEGACY_THEMES: Record<string, ThemeId> = {
-  slate: 'navy',
-  cyberpunk: 'navy',
-  crimson: 'graphite',
-  emerald: 'graphite',
-  midnight: 'midnight',
-};
 
 function readSavedTheme(): ThemeId {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved && THEMES.some(t => t.id === saved)) return saved as ThemeId;
-    const legacy = localStorage.getItem(LEGACY_KEY);
-    if (legacy && LEGACY_THEMES[legacy]) return LEGACY_THEMES[legacy];
   } catch {
     // Storage can be blocked; fall back to the default theme
   }
@@ -95,7 +84,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setThemeState(newTheme);
     try {
       localStorage.setItem(STORAGE_KEY, newTheme);
-      localStorage.removeItem(LEGACY_KEY);
     } catch {
       // Storage can be blocked; the theme still applies for this visit
     }
